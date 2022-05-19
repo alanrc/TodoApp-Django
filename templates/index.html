@@ -1,0 +1,65 @@
+{% extends 'base.html' %} {% block container %}
+
+<h5 class="lh-1 fw-bold text-center">TODO - LIST</h5>
+<ul class="d-flex list-unstyled justify-content-around">
+  <li class="">
+    Task{{num_task|pluralize:'s'}}
+    <span class="badge bg-secondary">{{ num_task }}</span>
+  </li>
+  <li class="">
+    Complete
+    <span class="badge bg-success">{{ complete }}</span>
+  </li>
+  <li class="">
+    Incomplete
+    <span class="badge bg-warning">{{ incomplete }}</span>
+  </li>
+</ul>
+
+<form action="" method="POST">
+  {% csrf_token %} {{ formTask.title }}
+  <button type="submit" class="w-100 btn btn-info mt-1">Add</button>
+</form>
+<div class="card-body">
+  <table class="table table-sm table-hover">
+    <!-- <thead>
+      <tr>
+        <th>Title</th>
+        <th class="text-center">Actions</th>
+      </tr>
+    </thead> -->
+    <tbody>
+      {% for task in tasks %}
+      <tr>
+        {% if task.complete == True %}
+        <td class="fw-lighter">
+          <s>{{ task.title }}</s>
+        </td>
+        {% else %}
+        <td class="">{{ task.title }}</td>
+        {% endif %}
+
+        <td class="text-center">
+          <a href="{% url 'editTask' task.id %}"
+            ><img
+              src="static/images/edit.svg"
+              alt="edit"
+              width="15"
+              ,
+              height="15"
+          /></a>
+          <a href="{% url 'deleteTask' task.id %}"
+            ><img
+              src="static/images/delete.svg"
+              alt="delete"
+              width="15"
+              ,
+              height="15"
+          /></a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock container %}

@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.http import HttpResponse
+# from django.http import HttpResponse
 from .models import Task
 from .forms import TaskForm
 
@@ -8,6 +8,8 @@ def index(request):
     num_task =Task.objects.count()
     tasks = Task.objects.all()
     # tasks = Task.objects.order_by('created')
+    complete = Task.objects.filter(complete=True).count()
+    incomplete = num_task - complete
     
     if request.method == 'POST':
         formTask = TaskForm(request.POST)
@@ -17,7 +19,7 @@ def index(request):
     else:
         formTask = TaskForm()
     
-        context = {'num_task':num_task,'tasks':tasks, 'formTask': formTask}
+        context = {'num_task':num_task,'tasks':tasks, 'formTask': formTask, 'complete':complete, 'incomplete': incomplete}
     
         return render(request,'index.html', context)
 

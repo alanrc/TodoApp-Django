@@ -1,0 +1,14 @@
+{% extends 'base.html' %} {% block container %}
+<h5 class="lh-1 fw-bold text-center">UPDATE TASK</h5>
+<form action="" method="post">
+  {% csrf_token %}
+  <div class="row align-items-center">
+    <div class="col-md-10 col-sm-10">{{formTask.title}}</div>
+    <div class="col-md-2 col-sm-2">{{formTask.complete}}</div>
+  </div>
+  <div class="text-center mt-3">
+    <button type="submit" class="btn btn-info mt-1">Update</button>
+    <a href="{% url 'index' %}" class="btn btn-primary mt-1">Cancelar</a>
+  </div>
+</form>
+{% endblock %}
